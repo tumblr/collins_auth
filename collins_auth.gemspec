@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors = ["Michael Benedict"]
   s.email = "benedict@tumblr.com"
   s.license = "Apache License 2.0"
-  s.homepage = "https://github.com/tumblr/collins/tree/master/support/ruby/collins-auth"
+  s.homepage = "https://github.com/tumblr/collins_auth"
 
   s.files = Dir["{lib}/*.rb", "*.md", "*.txt"]
 
