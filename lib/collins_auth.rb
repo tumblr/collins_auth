@@ -15,9 +15,12 @@ module Collins
 
     def self.load_config(options = {})
       conf = (options[:prompt] == :only) ? {} : (read_config(options[:config_file]) || {}).merge(options)
-
+      # check if host doesn't have a protocol specified
+      if conf.key?(:host) && !conf[:host].nil? && conf[:host].match(/^(http|https)\:\/\/.+/).nil?
+        raise "host #{conf[:host]} has no protocol specified. please specify http:// or https://"
+      end
       # check if we have all that we expect
-      if [:username, :password, :host].all? {|key| conf.keys.include? key}
+      if [:username, :password, :host].all? { |key| conf.key? key }
         return conf
       end
 
