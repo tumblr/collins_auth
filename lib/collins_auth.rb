@@ -54,7 +54,7 @@ module Collins
       home_config_file = File.join(ENV['HOME'], '.collins.yml') unless ENV['HOME'].nil?
 
       config_file ||= [ENV['COLLINS_CLIENT_CONFIG'], home_config_file, '/etc/collins.yml', '/var/db/collins.yml'].compact.find do |config_file|
-        File.readable? config_file and File.size(config_file) > 0
+        File.readable? File.expand_path(config_file) and File.size(config_file) > 0
       end
 
       file2conf config_file
