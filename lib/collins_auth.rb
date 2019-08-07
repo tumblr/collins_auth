@@ -6,7 +6,7 @@ require 'socket'
 module Collins
   module Authenticator
     def self.setup_client(options = {:prompt => false})
-      if options[:config_file] and not File.readable? options[:config_file]
+      if options[:config_file] and not File.readable? File.expand_path(options[:config_file])
         raise 'unable to read invalid config file: ' + options[:config_file]
       end
 
@@ -33,7 +33,7 @@ module Collins
 
     private
     def self.file2conf(file)
-      if file and File.readable? file
+      if file and File.readable? File.expand_path(file)
         # YAML config has keys as strings but we want symbols
         YAML.load_file(file).reduce({}) do |hash, (key, value)|
           hash[begin key.to_sym rescue key end] = value
@@ -54,7 +54,7 @@ module Collins
       home_config_file = File.join(ENV['HOME'], '.collins.yml') unless ENV['HOME'].nil?
 
       config_file ||= [ENV['COLLINS_CLIENT_CONFIG'], home_config_file, '/etc/collins.yml', '/var/db/collins.yml'].compact.find do |config_file|
-        File.readable? config_file and File.size(config_file) > 0
+        File.readable? File.expand_path(config_file) and File.size(config_file) > 0
       end
 
       file2conf config_file
