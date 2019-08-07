@@ -33,7 +33,7 @@ module Collins
 
     private
     def self.file2conf(file)
-      if file and File.readable? file
+      if file and File.readable? File.expand_path(file)
         # YAML config has keys as strings but we want symbols
         YAML.load_file(file).reduce({}) do |hash, (key, value)|
           hash[begin key.to_sym rescue key end] = value
